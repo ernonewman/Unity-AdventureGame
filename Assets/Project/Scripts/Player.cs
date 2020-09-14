@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Visuals")]
+    public GameObject model;
+    public float RotationSpeed = 2;
+
+
+    [Header("Movement")]
     public float MovingVelocity;
     public float JumpingVelocity;
 
     private bool _canJump = false;
     private Rigidbody _playerRigidBody;
+    private Quaternion _targetModelRotation;
 
     // Start is called before the first frame update
     void Start()
     {
         _playerRigidBody = GetComponent<Rigidbody>();
+        _targetModelRotation = Quaternion.Euler(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -27,6 +35,9 @@ public class Player : MonoBehaviour
         {
             _canJump = true;
         }
+
+        model.transform.rotation = Quaternion.Lerp(model.transform.rotation, _targetModelRotation, Time.deltaTime * RotationSpeed);
+
         ProcessInput();
     }
 
@@ -38,21 +49,29 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             _playerRigidBody.velocity = new Vector3(MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
+
+            _targetModelRotation = Quaternion.Euler(0, 270, 0);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             _playerRigidBody.velocity = new Vector3(-MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
+
+            _targetModelRotation = Quaternion.Euler(0, 90, 0);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
             _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, MovingVelocity);
+
+            _targetModelRotation = Quaternion.Euler(0, 180, 0);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, -MovingVelocity);
+
+            _targetModelRotation = Quaternion.Euler(0, 0, 0);
         }
 
         //Check for jumps
