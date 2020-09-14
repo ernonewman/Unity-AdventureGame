@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float JumpingForce = 150;
+    private bool _canJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Raycast to identify if the player can jump;
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f))
+        {
+            _canJump = true;
+        }
+        ProcessInput();
+    }
+
+    private void ProcessInput()
+    {
+        // Move in the XZ plane
         if (Input.GetKey(KeyCode.RightArrow))
         {
             //transform.position = new Vector3(transform.position.x + 5f * Time.deltaTime, transform.position.y, transform.position.z);
@@ -38,8 +52,10 @@ public class Player : MonoBehaviour
             transform.position += Vector3.back * 5f * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown("space"))
+        //Check for jumps
+        if (_canJump && Input.GetKeyDown(KeyCode.Space))
         {
+            _canJump = false;
             GetComponent<Rigidbody>().AddForce(0, JumpingForce, 0);
         }
     }
