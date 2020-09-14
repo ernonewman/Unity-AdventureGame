@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float JumpingForce = 150;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow))
         {
             transform.position += Vector3.back * 5f * Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown("space"))
+        {
+            GetComponent<Rigidbody>().AddForce(0, JumpingForce, 0);
         }
     }
 }
