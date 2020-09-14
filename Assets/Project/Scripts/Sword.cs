@@ -12,6 +12,7 @@ public class Sword : MonoBehaviour
 
     private Quaternion _targetRotation;
     private float _cooldownTimer;
+    private bool _isAttacking;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +23,7 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, _targetRotation, Time.deltaTime * SwingingSpeed);
-
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, _targetRotation, Time.deltaTime * (_isAttacking ? SwingingSpeed : CooldownSpeed));
         _cooldownTimer -= Time.deltaTime;
     }
 
@@ -41,7 +41,11 @@ public class Sword : MonoBehaviour
 
     private IEnumerator CooldownWait()
     {
+        _isAttacking = true;
+
         yield return new WaitForSeconds(AttackDuration);
+
+        _isAttacking = false;
         _targetRotation = Quaternion.Euler(0, 0, 0);
     }
 }

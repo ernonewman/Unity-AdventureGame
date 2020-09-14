@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 54115073}
   - component: {fileID: 54115072}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54115069}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.457, z: 0}
+  m_LocalPosition: {x: 0, y: 0.49, z: 0}
   m_LocalScale: {x: 0.1, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 532222728}
@@ -404,8 +404,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.8, z: 0.1}
-  m_Center: {x: 0, y: 0.42, z: 0}
+  m_Size: {x: 0.1, y: 1.37, z: 0.1}
+  m_Center: {x: 0, y: 0.63, z: 0}
 --- !u!114 &532222730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,9 +418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65592ce8527a0c49b0c3ea9a1d54b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwingingSpeed: 2
-  CooldownSpeed: 2
-  AttackDuration: 0.35
+  SwingingSpeed: 12
+  CooldownSpeed: 8
+  AttackDuration: 0.25
   CooldownDuration: 0.5
 --- !u!1 &705507993
 GameObject:
@@ -929,7 +929,7 @@ GameObject:
   - component: {fileID: 1932053365}
   - component: {fileID: 1932053364}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1008,7 +1008,7 @@ GameObject:
   - component: {fileID: 2024187800}
   - component: {fileID: 2024187799}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
