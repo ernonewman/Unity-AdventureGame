@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float JumpingForce = 150;
+    public float MovingVelocity;
+    public float JumpingVelocity;
     private bool _canJump = false;
 
     // Start is called before the first frame update
@@ -29,34 +30,34 @@ public class Player : MonoBehaviour
 
     private void ProcessInput()
     {
+        GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+
         // Move in the XZ plane
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            //transform.position = new Vector3(transform.position.x + 5f * Time.deltaTime, transform.position.y, transform.position.z);
-            //transform.position += new Vector3(5f * Time.deltaTime, 0, 0);
-            transform.position += Vector3.right * 5f * Time.deltaTime;
+            GetComponent<Rigidbody>().velocity = new Vector3(MovingVelocity, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position += Vector3.left * 5f * Time.deltaTime;
+            GetComponent<Rigidbody>().velocity = new Vector3(-MovingVelocity, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position += Vector3.forward * 5f * Time.deltaTime;
+            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, GetComponent<Rigidbody>().velocity.y, MovingVelocity);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.position += Vector3.back * 5f * Time.deltaTime;
+            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, GetComponent<Rigidbody>().velocity.y, -MovingVelocity);
         }
 
         //Check for jumps
         if (_canJump && Input.GetKeyDown(KeyCode.Space))
         {
             _canJump = false;
-            GetComponent<Rigidbody>().AddForce(0, JumpingForce, 0);
+            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, JumpingVelocity, GetComponent<Rigidbody>().velocity.z);
         }
     }
 }
