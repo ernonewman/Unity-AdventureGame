@@ -534,6 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 957655987}
+  RotationSpeed: 2
   MovingVelocity: 5
   JumpingVelocity: 5
 --- !u!54 &1269740850
