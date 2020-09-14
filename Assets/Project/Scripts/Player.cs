@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     public float MovingVelocity;
     public float JumpingVelocity;
 
+    [Header("Equipment")]
+    public Sword PlayersSword;
+
     private bool _canJump = false;
     private Rigidbody _playerRigidBody;
     private Quaternion _targetModelRotation;
@@ -79,6 +82,13 @@ public class Player : MonoBehaviour
         {
             _canJump = false;
             _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, JumpingVelocity, _playerRigidBody.velocity.z);
+        }
+
+        // Check equipment interaction.
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            PlayersSword.Attack();
         }
     }
 }
