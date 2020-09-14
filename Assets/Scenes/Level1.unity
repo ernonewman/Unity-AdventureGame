@@ -418,6 +418,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65592ce8527a0c49b0c3ea9a1d54b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SwingingSpeed: 2
+  CooldownSpeed: 2
+  AttackDuration: 0.35
+  CooldownDuration: 0.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +681,7 @@ MonoBehaviour:
   RotationSpeed: 2
   MovingVelocity: 5
   JumpingVelocity: 5
+  PlayersSword: {fileID: 532222730}
 --- !u!54 &1269740850
 Rigidbody:
   m_ObjectHideFlags: 0

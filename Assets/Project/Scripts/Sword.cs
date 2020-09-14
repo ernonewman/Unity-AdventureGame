@@ -5,8 +5,13 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public float SwingingSpeed = 2f;
+    public float CooldownSpeed = 2f;
+
+    public float AttackDuration = 0.35f;
+    public float CooldownDuration = 0.5f;
 
     private Quaternion _targetRotation;
+    private float _cooldownTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -18,10 +23,25 @@ public class Sword : MonoBehaviour
     void Update()
     {
         transform.localRotation = Quaternion.Lerp(transform.localRotation, _targetRotation, Time.deltaTime * SwingingSpeed);
+
+        _cooldownTimer -= Time.deltaTime;
     }
 
     public void Attack()
     {
-        _targetRotation = Quaternion.Euler(-90, 0, 0);
+        if (_cooldownTimer <= 0f)
+        {
+            _targetRotation = Quaternion.Euler(-90, 0, 0);
+
+            _cooldownTimer = CooldownDuration;
+        }
+
+        StartCoroutine(CooldownWait());
+    }
+
+    private IEnumerator CooldownWait()
+    {
+        yield return new WaitForSeconds(AttackDuration);
+        _targetRotation = Quaternion.Euler(0, 0, 0);
     }
 }
