@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class Player : MonoBehaviour
 
     [Header("Equipment")]
     public Sword PlayersSword;
+    public GameObject BombPrefab;
+    public int BombAmount = 5;
+    public float ThrowingSpeed;
 
     private bool _canJump = false;
     private Rigidbody _playerRigidBody;
@@ -53,28 +57,28 @@ public class Player : MonoBehaviour
         {
             _playerRigidBody.velocity = new Vector3(MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
 
-            _targetModelRotation = Quaternion.Euler(0, 270, 0);
+            _targetModelRotation = Quaternion.Euler(0, 90, 0);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             _playerRigidBody.velocity = new Vector3(-MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
 
-            _targetModelRotation = Quaternion.Euler(0, 90, 0);
+            _targetModelRotation = Quaternion.Euler(0, 270, 0);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
             _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, MovingVelocity);
 
-            _targetModelRotation = Quaternion.Euler(0, 180, 0);
+            _targetModelRotation = Quaternion.Euler(0, 0, 0);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, -MovingVelocity);
 
-            _targetModelRotation = Quaternion.Euler(0, 0, 0);
+            _targetModelRotation = Quaternion.Euler(0, 180, 0);
         }
 
         //Check for jumps
@@ -89,6 +93,27 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Z))
         {
             PlayersSword.Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ThrowBomb();
+        }
+    }
+
+    private void ThrowBomb()
+    {
+        if (BombAmount > 0)
+        {
+            var bombObject = Instantiate(BombPrefab);
+
+            bombObject.transform.position = transform.position + model.transform.forward;
+
+            var throwingDirection = (model.transform.forward + Vector3.up).normalized;
+
+            bombObject.GetComponent<Rigidbody>().AddForce(throwingDirection * ThrowingSpeed);
+
+            BombAmount--;
         }
     }
 }
