@@ -14,8 +14,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position = new Vector3(transform.position.x + 5f * Time.deltaTime, transform.position.y, transform.position.z);
-        //transform.position += new Vector3(5f * Time.deltaTime, 0, 0);
-        transform.position += Vector3.right * 5f * Time.deltaTime;
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            //transform.position = new Vector3(transform.position.x + 5f * Time.deltaTime, transform.position.y, transform.position.z);
+            //transform.position += new Vector3(5f * Time.deltaTime, 0, 0);
+            transform.position += Vector3.right * 5f * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position += Vector3.left * 5f * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.position += Vector3.forward * 5f * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.position += Vector3.back * 5f * Time.deltaTime;
+        }
     }
 }
