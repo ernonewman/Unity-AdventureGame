@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
 {
     public float MovingVelocity;
     public float JumpingVelocity;
+
     private bool _canJump = false;
+    private Rigidbody _playerRigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        _playerRigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -30,34 +32,34 @@ public class Player : MonoBehaviour
 
     private void ProcessInput()
     {
-        GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+        _playerRigidBody.velocity = new Vector3(0, _playerRigidBody.velocity.y, 0);
 
         // Move in the XZ plane
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(MovingVelocity, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
+            _playerRigidBody.velocity = new Vector3(MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(-MovingVelocity, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
+            _playerRigidBody.velocity = new Vector3(-MovingVelocity, _playerRigidBody.velocity.y, _playerRigidBody.velocity.z);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, GetComponent<Rigidbody>().velocity.y, MovingVelocity);
+            _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, MovingVelocity);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, GetComponent<Rigidbody>().velocity.y, -MovingVelocity);
+            _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, _playerRigidBody.velocity.y, -MovingVelocity);
         }
 
         //Check for jumps
         if (_canJump && Input.GetKeyDown(KeyCode.Space))
         {
             _canJump = false;
-            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, JumpingVelocity, GetComponent<Rigidbody>().velocity.z);
+            _playerRigidBody.velocity = new Vector3(_playerRigidBody.velocity.x, JumpingVelocity, _playerRigidBody.velocity.z);
         }
     }
 }
