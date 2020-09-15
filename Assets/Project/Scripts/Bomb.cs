@@ -30,7 +30,16 @@ public class Bomb : MonoBehaviour
         if (_explosionTimer <= 0 && !_exploded)
         {
             _exploded = true;
-            //var _hitObjects = Physics.OverlapSphere(transform.position, Radius);
+
+            var _hitObjects = Physics.OverlapSphere(transform.position, Radius);
+
+            foreach (var collider in _hitObjects)
+            {
+                if (collider.GetComponent<Enemy>() != null)
+                {
+                    collider.GetComponent<Enemy>().Hit();
+                }
+            }
 
             StartCoroutine(Explode());
         }
