@@ -12,7 +12,15 @@ public class Sword : MonoBehaviour
 
     private Quaternion _targetRotation;
     private float _cooldownTimer;
+
     private bool _isAttacking;
+
+    public bool IsAttacking
+    {
+        get { return _isAttacking; }
+        set { _isAttacking = value; }
+    }
+
 
     // Start is called before the first frame update
     void Start()
