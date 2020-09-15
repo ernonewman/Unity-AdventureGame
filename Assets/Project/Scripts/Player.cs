@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     public float MovingVelocity;
     public float JumpingVelocity;
+    public float KnockbackForce;
 
     [Header("Equipment")]
     public Sword PlayersSword;
@@ -22,10 +23,13 @@ public class Player : MonoBehaviour
     public int BombAmount = 5;
     public float ThrowingSpeed;
     public int ArrowAmount = 10;
+    public int Health = 5;
 
     private bool _canJump = false;
     private Rigidbody _playerRigidBody;
     private Quaternion _targetModelRotation;
+    private float _knockbackTimer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +52,14 @@ public class Player : MonoBehaviour
 
         model.transform.rotation = Quaternion.Lerp(model.transform.rotation, _targetModelRotation, Time.deltaTime * RotationSpeed);
 
-        ProcessInput();
+        if (_knockbackTimer > 0)
+        {
+            _knockbackTimer -= Time.deltaTime;
+        }
+        else
+        {
+            ProcessInput();
+        }
     }
 
     private void ProcessInput()
@@ -131,6 +142,38 @@ public class Player : MonoBehaviour
             bombObject.GetComponent<Rigidbody>().AddForce(throwingDirection * ThrowingSpeed);
 
             BombAmount--;
+        }
+    }
+
+    private void OnTriggerEnter(Collider otherCollider)
+    {
+        if (otherCollider.GetComponent<EnemyBullet>() != null)
+        {
+            Hit((transform.position - otherCollider.transform.position).normalized);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            Hit((transform.position - collision.transform.position).normalized);
+        }
+    }
+
+    private void Hit(Vector3 direction)
+    {
+        var knockBackDirection = (direction + Vector3.up).normalized;
+
+        _playerRigidBody.AddForce(knockBackDirection * KnockbackForce);
+
+        _knockbackTimer = 1f;
+
+        Health--;
+
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
