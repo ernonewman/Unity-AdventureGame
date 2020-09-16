@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class GameSceneController : MonoBehaviour
     public Player CurrentPlayer;
 
     [Header("UI")]
-    public Text HealthText;
+    public GameObject[] Hearts;
     public Text BombText;
     public Text ArrowText;
 
@@ -24,15 +25,23 @@ public class GameSceneController : MonoBehaviour
     {
         if (CurrentPlayer != null)
         {
-            HealthText.text = $"Health: {CurrentPlayer.Health}";
+            for (int i = 0; i < Hearts.Length; i++)
+            {
+                Hearts[i].SetActive(i < CurrentPlayer.Health);
+            }
+
             BombText.text = $"Bombs: {CurrentPlayer.BombAmount}";
             ArrowText.text = $"Arrow: {CurrentPlayer.ArrowAmount}";
         }
         else
         {
-            HealthText.text = "Health: 0";
-            BombText.text = string.Empty;
-            ArrowText.text = string.Empty;
+            for (int i = 0; i < Hearts.Length; i++)
+            {
+                Hearts[i].SetActive(false);
+            }
+
+            //BombText.text = string.Empty;
+            //ArrowText.text = string.Empty;
         }
     }
 }
