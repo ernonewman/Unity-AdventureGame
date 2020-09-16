@@ -17,7 +17,10 @@ public class GameCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, Target.transform.position + Offset, Time.deltaTime * FocusSpeed);
+        if (Target != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, Target.transform.position + Offset, Time.deltaTime * FocusSpeed);
+        }
     }
 
 }
